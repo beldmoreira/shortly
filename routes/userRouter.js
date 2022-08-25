@@ -1,11 +1,10 @@
 import { Router } from "express";
-import joiValidation from "../middlewares/joiValidation.js"
-import authSchema from  "../schemas/authSchema.js";
-import loginSchema from "../schemas/loginSchema.js";
+import { getRanking, getUserById } from "../controllers/userController.js";
+import {validateToken} from "../middlewares/authValidation.js"
 
-const authRouter = Router()
+const userRouter = Router();
 
-authRouter.post(`/signup`,joiValidation(authSchema))
-authRouter.post(`/signin`,joiValidation(loginSchema))
+userRouter.get("/users/:id", validateToken,getUserById);
+userRouter.get("/ranking", getRanking)
 
-export default authRouter;
+export default userRouter;
